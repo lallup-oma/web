@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArteVista – Fine Art Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'sans-serif'] },
+          colors: {
+            gold: { 50:'#fdfbf5', 100:'#faf4e1', 200:'#f3e3b0', 300:'#eacf7c', 400:'#dfb84a', 500:'#c9982a', 600:'#a87720', 700:'#885d1a', 800:'#6b4816', 900:'#543812' },
+            cream: { 50:'#fefdf9', 100:'#fdf9ef', 200:'#f9f0d8', 300:'#f3e3b8', 400:'#e9cf8e', 500:'#d9b660' },
+            charcoal: { 50:'#f7f7f7', 100:'#e8e8e8', 200:'#d1d1d1', 300:'#a8a8a8', 400:'#7a7a7a', 500:'#555555', 600:'#3d3d3d', 700:'#2a2a2a', 800:'#1c1c1c', 900:'#111111' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #fefdf9; }
+    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+    .painting-card:hover .painting-overlay { opacity: 1; }
+    .painting-card:hover img { transform: scale(1.04); }
+    img { transition: transform 0.5s ease; }
+    .painting-overlay { transition: opacity 0.3s ease; }
+    .nav-link { position: relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:#c9982a; transition:width 0.3s ease; }
+    .nav-link:hover::after { width:100%; }
+    .btn-primary { transition: all 0.2s ease; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(201,152,42,0.35); }
+    .hero-overlay { background: linear-gradient(135deg, rgba(17,17,17,0.7) 0%, rgba(17,17,17,0.3) 100%); }
+    #cart-sidebar { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+    #cart-backdrop { transition: opacity 0.35s ease; }
+    .animate-fadeIn { animation: fadeIn 0.5s ease forwards; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    .stagger-item { opacity:0; }
+    .stagger-item.visible { animation: fadeIn 0.5s ease forwards; }
+  </style>
+</head>
+<body class="text-charcoal-800">
+
+  <!-- Navigation -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-8 h-8 rounded-full bg-gold-500 flex items-center justify-center">
+            <span class="text-white text-sm font-bold font-serif">A</span>
+          </div>
+          <span class="font-serif text-xl font-semibold text-white group-hover:text-gold-300 transition-colors">ArteVista</span>
+        </a>
+        <!-- Desktop Nav -->
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="/" class="nav-link text-white/90 hover:text-white text-sm font-medium transition-colors">Home</a>
+          <a href="/gallery.html" class="nav-link text-white/90 hover:text-white text-sm font-medium transition-colors">Gallery</a>
+          <a href="/about.html" class="nav-link text-white/90 hover:text-white text-sm font-medium transition-colors">About</a>
+          <a href="/contact.html" class="nav-link text-white/90 hover:text-white text-sm font-medium transition-colors">Contact</a>
+        </nav>
+        <!-- Cart & Mobile -->
+        <div class="flex items-center gap-3">
+          <button id="cart-btn" class="relative p-2 text-white hover:text-gold-300 transition-colors">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-gold-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-white">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-charcoal-900/95 backdrop-blur-sm">
+      <div class="px-4 py-4 flex flex-col gap-3">
+        <a href="/" class="text-white py-2 text-sm font-medium">Home</a>
+        <a href="/gallery.html" class="text-white py-2 text-sm font-medium">Gallery</a>
+        <a href="/about.html" class="text-white py-2 text-sm font-medium">About</a>
+        <a href="/contact.html" class="text-white py-2 text-sm font-medium">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative h-screen min-h-[600px] flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="https://images.pexels.com/photos/1585325/pexels-photo-1585325.jpeg?auto=compress&cs=tinysrgb&w=1920" alt="Art Gallery" class="w-full h-full object-cover" />
+      <div class="hero-overlay absolute inset-0"></div>
+    </div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl">
+        <p class="text-gold-400 text-sm font-medium tracking-widest uppercase mb-4 animate-fadeIn">Curated Fine Art</p>
+        <h1 class="font-serif text-5xl md:text-7xl font-bold text-white leading-tight mb-6 animate-fadeIn" style="animation-delay:0.1s">
+          Where Art Finds<br/><em class="text-gold-300">Its Home</em>
+        </h1>
+        <p class="text-white/80 text-lg mb-8 leading-relaxed animate-fadeIn" style="animation-delay:0.2s">
+          Discover original paintings from talented artists. Each piece tells a story — find yours.
+        </p>
+        <div class="flex flex-wrap gap-4 animate-fadeIn" style="animation-delay:0.3s">
+          <a href="/gallery.html" class="btn-primary inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-7 py-3 rounded-full font-medium text-sm">
+            Explore Gallery <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+          <a href="/about.html" class="inline-flex items-center gap-2 border border-white/40 hover:border-white text-white px-7 py-3 rounded-full font-medium text-sm transition-colors">
+            Our Story
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <i data-lucide="chevron-down" class="w-6 h-6 text-white/60"></i>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="bg-charcoal-900 py-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div><div class="font-serif text-2xl font-bold text-gold-400" id="stat-paintings">—</div><div class="text-charcoal-300 text-xs mt-1 uppercase tracking-wide">Original Paintings</div></div>
+        <div><div class="font-serif text-2xl font-bold text-gold-400">7</div><div class="text-charcoal-300 text-xs mt-1 uppercase tracking-wide">Art Categories</div></div>
+        <div><div class="font-serif text-2xl font-bold text-gold-400">100%</div><div class="text-charcoal-300 text-xs mt-1 uppercase tracking-wide">Original Works</div></div>
+        <div><div class="font-serif text-2xl font-bold text-gold-400">WhatsApp</div><div class="text-charcoal-300 text-xs mt-1 uppercase tracking-wide">Easy Checkout</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Paintings -->
+  <section class="py-20 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-gold-600 text-sm font-medium tracking-widest uppercase mb-3">Hand-Picked</p>
+        <h2 class="font-serif text-4xl md:text-5xl font-bold text-charcoal-900">Featured Works</h2>
+        <div class="w-16 h-0.5 bg-gold-500 mx-auto mt-4"></div>
+      </div>
+      <div id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Loaded by JS -->
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-80"></div>
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-80"></div>
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-80"></div>
+      </div>
+      <div class="text-center mt-12">
+        <a href="/gallery.html" class="btn-primary inline-flex items-center gap-2 border-2 border-gold-500 text-gold-600 hover:bg-gold-500 hover:text-white px-8 py-3 rounded-full font-medium text-sm transition-colors">
+          View All Paintings <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-gold-600 text-sm font-medium tracking-widest uppercase mb-3">Browse By</p>
+        <h2 class="font-serif text-4xl font-bold text-charcoal-900">Art Categories</h2>
+        <div class="w-16 h-0.5 bg-gold-500 mx-auto mt-4"></div>
+      </div>
+      <div id="categories-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Loaded by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-20 bg-charcoal-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-gold-400 text-sm font-medium tracking-widest uppercase mb-3">Simple Process</p>
+        <h2 class="font-serif text-4xl font-bold text-white">How to Purchase</h2>
+        <div class="w-16 h-0.5 bg-gold-500 mx-auto mt-4"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center group">
+          <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-5 group-hover:bg-gold-500/20 transition-colors">
+            <i data-lucide="search" class="w-7 h-7 text-gold-400"></i>
+          </div>
+          <div class="font-serif text-5xl font-bold text-gold-500/30 mb-2">01</div>
+          <h3 class="text-white font-semibold text-lg mb-2">Browse & Select</h3>
+          <p class="text-charcoal-300 text-sm leading-relaxed">Explore our curated collection and add your favourite paintings to your cart.</p>
+        </div>
+        <div class="text-center group">
+          <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-5 group-hover:bg-gold-500/20 transition-colors">
+            <i data-lucide="shopping-bag" class="w-7 h-7 text-gold-400"></i>
+          </div>
+          <div class="font-serif text-5xl font-bold text-gold-500/30 mb-2">02</div>
+          <h3 class="text-white font-semibold text-lg mb-2">Review Your Cart</h3>
+          <p class="text-charcoal-300 text-sm leading-relaxed">Review your selection and proceed to checkout when you're ready.</p>
+        </div>
+        <div class="text-center group">
+          <div class="w-16 h-16 rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center mx-auto mb-5 group-hover:bg-gold-500/20 transition-colors">
+            <i data-lucide="message-circle" class="w-7 h-7 text-gold-400"></i>
+          </div>
+          <div class="font-serif text-5xl font-bold text-gold-500/30 mb-2">03</div>
+          <h3 class="text-white font-semibold text-lg mb-2">WhatsApp Checkout</h3>
+          <p class="text-charcoal-300 text-sm leading-relaxed">Complete your order via WhatsApp — we'll arrange payment and delivery personally.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-charcoal-900 border-t border-charcoal-800 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-7 h-7 rounded-full bg-gold-500 flex items-center justify-center">
+              <span class="text-white text-xs font-bold font-serif">A</span>
+            </div>
+            <span class="font-serif text-lg font-semibold text-white">ArteVista</span>
+          </div>
+          <p class="text-charcoal-400 text-sm leading-relaxed">A curated gallery of original paintings. We believe every wall deserves original art.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wide mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="/gallery.html" class="text-charcoal-400 hover:text-gold-400 text-sm transition-colors">Gallery</a></li>
+            <li><a href="/about.html" class="text-charcoal-400 hover:text-gold-400 text-sm transition-colors">About Us</a></li>
+            <li><a href="/contact.html" class="text-charcoal-400 hover:text-gold-400 text-sm transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold text-sm uppercase tracking-wide mb-4">Contact</h4>
+          <div class="space-y-2">
+            <p class="text-charcoal-400 text-sm flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-4 h-4 text-green-500"></i>
+              WhatsApp: +1 234 567 8900
+            </p>
+            <p class="text-charcoal-400 text-sm flex items-center gap-2">
+              <i data-lucide="mail" class="w-4 h-4 text-gold-500"></i>
+              hello@artevista.com
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-charcoal-800 pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
+        <p class="text-charcoal-500 text-xs">&copy; 2024 ArteVista. All rights reserved.</p>
+        <p class="text-charcoal-500 text-xs">Original Art. Original Experience.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0"></div>
+  <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl translate-x-full flex flex-col">
+    <div class="flex items-center justify-between p-5 border-b">
+      <h3 class="font-serif text-xl font-bold text-charcoal-900">Your Cart</h3>
+      <button id="close-cart" class="p-1.5 hover:bg-charcoal-100 rounded-full transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <p id="cart-empty" class="text-charcoal-400 text-sm text-center py-12">Your cart is empty</p>
+    </div>
+    <div class="p-5 border-t bg-cream-50">
+      <div class="flex items-center justify-between mb-4">
+        <span class="font-medium text-charcoal-700">Total</span>
+        <span id="cart-total" class="font-serif text-xl font-bold text-charcoal-900">$0.00</span>
+      </div>
+      <button id="whatsapp-checkout-btn" class="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3.5 rounded-full font-medium transition-colors">
+        <i data-lucide="message-circle" class="w-5 h-5"></i>
+        Order via WhatsApp
+      </button>
+      <p class="text-charcoal-400 text-xs text-center mt-2">We'll confirm your order personally</p>
+    </div>
+  </div>
+
+  <script type="module" src="/js/main.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

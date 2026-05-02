@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery – ArteVista</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'sans-serif'] },
+          colors: {
+            gold: { 50:'#fdfbf5', 100:'#faf4e1', 200:'#f3e3b0', 300:'#eacf7c', 400:'#dfb84a', 500:'#c9982a', 600:'#a87720', 700:'#885d1a', 800:'#6b4816', 900:'#543812' },
+            cream: { 50:'#fefdf9', 100:'#fdf9ef', 200:'#f9f0d8' },
+            charcoal: { 50:'#f7f7f7', 100:'#e8e8e8', 200:'#d1d1d1', 300:'#a8a8a8', 400:'#7a7a7a', 500:'#555555', 600:'#3d3d3d', 700:'#2a2a2a', 800:'#1c1c1c', 900:'#111111' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #fefdf9; }
+    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+    .painting-card:hover .painting-overlay { opacity: 1; }
+    .painting-card:hover img { transform: scale(1.04); }
+    img { transition: transform 0.5s ease; }
+    .painting-overlay { transition: opacity 0.3s ease; }
+    .nav-link::after { content:''; position:absolute; bottom:-2px; left:0; width:0; height:1px; background:#c9982a; transition:width 0.3s ease; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    .nav-link { position:relative; }
+    .btn-primary { transition: all 0.2s ease; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(201,152,42,0.35); }
+    #cart-sidebar { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); }
+    #cart-backdrop { transition: opacity 0.35s ease; }
+    .filter-chip { transition: all 0.15s ease; }
+    .animate-fadeIn { animation: fadeIn 0.4s ease forwards; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+  </style>
+</head>
+<body class="text-charcoal-800">
+
+  <!-- Navigation -->
+  <header id="navbar" class="sticky top-0 z-50 bg-charcoal-900/95 backdrop-blur-sm shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="flex items-center gap-2 group">
+          <div class="w-7 h-7 rounded-full bg-gold-500 flex items-center justify-center">
+            <span class="text-white text-xs font-bold font-serif">A</span>
+          </div>
+          <span class="font-serif text-lg font-semibold text-white group-hover:text-gold-300 transition-colors">ArteVista</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-7">
+          <a href="/" class="nav-link text-charcoal-300 hover:text-white text-sm font-medium transition-colors">Home</a>
+          <a href="/gallery.html" class="nav-link active text-white text-sm font-medium">Gallery</a>
+          <a href="/about.html" class="nav-link text-charcoal-300 hover:text-white text-sm font-medium transition-colors">About</a>
+          <a href="/contact.html" class="nav-link text-charcoal-300 hover:text-white text-sm font-medium transition-colors">Contact</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <button id="cart-btn" class="relative p-2 text-white hover:text-gold-300 transition-colors">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+            <span id="cart-count" class="absolute -top-0.5 -right-0.5 bg-gold-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-white">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-charcoal-900">
+      <div class="px-4 py-4 flex flex-col gap-3">
+        <a href="/" class="text-charcoal-300 py-2 text-sm">Home</a>
+        <a href="/gallery.html" class="text-white py-2 text-sm font-medium">Gallery</a>
+        <a href="/about.html" class="text-charcoal-300 py-2 text-sm">About</a>
+        <a href="/contact.html" class="text-charcoal-300 py-2 text-sm">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="relative bg-charcoal-900 py-16 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <img src="https://images.pexels.com/photos/102127/pexels-photo-102127.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" class="w-full h-full object-cover" />
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-gold-400 text-sm font-medium tracking-widest uppercase mb-3">Our Collection</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-white mb-3">Art Gallery</h1>
+      <p class="text-charcoal-300 text-base max-w-xl mx-auto">Explore our full collection of original paintings. Each piece is one of a kind.</p>
+    </div>
+  </section>
+
+  <!-- Filters & Gallery -->
+  <section class="py-10 bg-cream-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Search + Filters -->
+      <div class="flex flex-col md:flex-row gap-4 mb-8">
+        <div class="relative flex-1">
+          <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-charcoal-400"></i>
+          <input id="search-input" type="text" placeholder="Search paintings..." class="w-full pl-10 pr-4 py-2.5 border border-charcoal-200 rounded-full bg-white text-sm focus:outline-none focus:border-gold-400 transition-colors" />
+        </div>
+        <div class="flex gap-2 items-center">
+          <select id="sort-select" class="border border-charcoal-200 rounded-full px-4 py-2.5 text-sm bg-white focus:outline-none focus:border-gold-400 text-charcoal-700">
+            <option value="newest">Newest First</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+          <label class="flex items-center gap-2 text-sm text-charcoal-600 cursor-pointer whitespace-nowrap">
+            <input id="hide-sold" type="checkbox" class="rounded accent-gold-500" checked />
+            Hide Sold
+          </label>
+        </div>
+      </div>
+
+      <!-- Category Filter Chips -->
+      <div id="category-chips" class="flex flex-wrap gap-2 mb-8">
+        <button data-cat="" class="filter-chip active-chip px-4 py-1.5 rounded-full text-sm font-medium bg-gold-500 text-white">All</button>
+      </div>
+
+      <!-- Results Count -->
+      <p id="results-count" class="text-charcoal-400 text-sm mb-6"></p>
+
+      <!-- Grid -->
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-72"></div>
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-72"></div>
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-72"></div>
+        <div class="animate-pulse bg-charcoal-100 rounded-xl h-72"></div>
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-12">
+        <button id="load-more-btn" class="hidden btn-primary border-2 border-gold-500 text-gold-600 hover:bg-gold-500 hover:text-white px-8 py-3 rounded-full font-medium text-sm transition-colors">
+          Load More
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-charcoal-900 border-t border-charcoal-800 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded-full bg-gold-500 flex items-center justify-center">
+          <span class="text-white text-xs font-bold font-serif">A</span>
+        </div>
+        <span class="font-serif text-sm font-semibold text-white">ArteVista</span>
+      </div>
+      <p class="text-charcoal-500 text-xs">&copy; 2024 ArteVista. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-backdrop" class="fixed inset-0 bg-black/50 z-40 hidden opacity-0"></div>
+  <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl translate-x-full flex flex-col">
+    <div class="flex items-center justify-between p-5 border-b">
+      <h3 class="font-serif text-xl font-bold text-charcoal-900">Your Cart</h3>
+      <button id="close-cart" class="p-1.5 hover:bg-charcoal-100 rounded-full transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <p id="cart-empty" class="text-charcoal-400 text-sm text-center py-12">Your cart is empty</p>
+    </div>
+    <div class="p-5 border-t bg-cream-50">
+      <div class="flex items-center justify-between mb-4">
+        <span class="font-medium text-charcoal-700">Total</span>
+        <span id="cart-total" class="font-serif text-xl font-bold text-charcoal-900">$0.00</span>
+      </div>
+      <button id="whatsapp-checkout-btn" class="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white py-3.5 rounded-full font-medium transition-colors">
+        <i data-lucide="message-circle" class="w-5 h-5"></i>
+        Order via WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- Painting Detail Modal -->
+  <div id="painting-modal" class="fixed inset-0 z-60 hidden">
+    <div id="modal-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        <div id="modal-content" class="p-0"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/js/gallery.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

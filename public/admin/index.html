@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – ArteVista</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'sans-serif'] },
+          colors: {
+            gold: { 50:'#fdfbf5', 100:'#faf4e1', 500:'#c9982a', 600:'#a87720' },
+            charcoal: { 50:'#f7f7f7', 100:'#e8e8e8', 200:'#d1d1d1', 300:'#a8a8a8', 400:'#7a7a7a', 500:'#555555', 600:'#3d3d3d', 700:'#2a2a2a', 800:'#1c1c1c', 900:'#111111' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .tab-btn { @apply px-4 py-2 text-sm font-medium rounded-lg transition-colors; }
+    .tab-btn.active { @apply bg-gold-500 text-white; }
+    .tab-btn:not(.active) { @apply bg-charcoal-100 text-charcoal-600 hover:bg-charcoal-200; }
+    .form-input { @apply w-full px-3.5 py-2 border border-charcoal-200 rounded-lg text-sm focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500; }
+    .btn-primary { @apply px-4 py-2 bg-gold-500 hover:bg-gold-600 text-white rounded-lg font-medium text-sm transition-colors; }
+    .btn-danger { @apply px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium text-sm transition-colors; }
+  </style>
+</head>
+<body class="bg-charcoal-50 text-charcoal-900">
+
+  <!-- Login Screen -->
+  <div id="login-screen" class="min-h-screen bg-gradient-to-br from-charcoal-900 to-charcoal-800 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+      <div class="flex items-center justify-center mb-6">
+        <div class="w-12 h-12 rounded-full bg-gold-500 flex items-center justify-center">
+          <span class="text-white text-lg font-bold">A</span>
+        </div>
+      </div>
+      <h1 class="text-2xl font-bold text-center mb-8">ArteVista Admin</h1>
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Email</label>
+          <input type="email" id="login-email" value="admin@artevista.com" readonly class="form-input bg-charcoal-50" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1.5">Password</label>
+          <input type="password" id="login-password" placeholder="Enter password" class="form-input" autofocus />
+        </div>
+        <button type="submit" class="w-full btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Dashboard -->
+  <div id="admin-screen" class="hidden min-h-screen bg-charcoal-50">
+    <!-- Header -->
+    <header class="bg-white border-b border-charcoal-200 shadow-sm sticky top-0 z-40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gold-500 flex items-center justify-center">
+            <span class="text-white text-xs font-bold">A</span>
+          </div>
+          <span class="text-lg font-bold">ArteVista Admin</span>
+        </div>
+        <button id="logout-btn" class="px-4 py-2 text-charcoal-600 hover:text-charcoal-900 font-medium text-sm transition-colors">
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-8 flex-wrap">
+        <button class="tab-btn active" data-tab="paintings">Paintings</button>
+        <button class="tab-btn" data-tab="categories">Categories</button>
+      </div>
+
+      <!-- Paintings Tab -->
+      <div id="paintings-tab" class="tab-content">
+        <div class="mb-6 flex flex-col md:flex-row gap-4 justify-between">
+          <h2 class="text-2xl font-bold">Manage Paintings</h2>
+          <button id="add-painting-btn" class="btn-primary flex items-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Painting
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 bg-white rounded-xl shadow-sm overflow-hidden">
+          <div id="paintings-list" class="divide-y">
+            <div class="p-8 text-center text-charcoal-400">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Tab -->
+      <div id="categories-tab" class="tab-content hidden">
+        <div class="mb-6 flex flex-col md:flex-row gap-4 justify-between">
+          <h2 class="text-2xl font-bold">Manage Categories</h2>
+          <button id="add-category-btn" class="btn-primary flex items-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Category
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div id="categories-list" class="col-span-full">
+            <div class="p-8 text-center text-charcoal-400">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painting Form Modal -->
+  <div id="painting-modal" class="hidden fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-6">
+          <h2 id="form-title" class="text-2xl font-bold">Add Painting</h2>
+          <button onclick="document.getElementById('painting-modal').classList.add('hidden')" class="p-1.5 hover:bg-charcoal-100 rounded-full transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="painting-form" class="space-y-4">
+          <input type="hidden" id="painting-id" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Title</label>
+              <input type="text" id="painting-title" class="form-input" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Artist</label>
+              <input type="text" id="painting-artist" class="form-input" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Category</label>
+              <select id="painting-category" class="form-input">
+                <option value="">Uncategorized</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Price</label>
+              <input type="number" id="painting-price" step="0.01" class="form-input" required />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Dimensions</label>
+              <input type="text" id="painting-dimensions" placeholder="e.g. 60x80 cm" class="form-input" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Medium</label>
+              <input type="text" id="painting-medium" placeholder="e.g. Oil on canvas" class="form-input" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Year</label>
+              <input type="number" id="painting-year" class="form-input" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5">Sold</label>
+              <select id="painting-sold" class="form-input">
+                <option value="false">Available</option>
+                <option value="true">Sold</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5">Description</label>
+            <textarea id="painting-description" rows="3" class="form-input resize-none"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium mb-1.5">Image</label>
+            <input type="file" id="painting-image" accept="image/*" class="form-input" />
+            <div id="image-preview" class="mt-2"></div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="painting-featured" class="rounded" />
+            <label for="painting-featured" class="text-sm">Featured Painting</label>
+          </div>
+
+          <div class="flex gap-3 pt-4">
+            <button type="submit" class="btn-primary flex-1">Save Painting</button>
+            <button type="button" onclick="document.getElementById('painting-modal').classList.add('hidden')" class="px-4 py-2 border border-charcoal-200 rounded-lg font-medium text-sm hover:bg-charcoal-50 transition-colors flex-1">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Form Modal -->
+  <div id="category-modal" class="hidden fixed inset-0 z-50">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold">Add Category</h2>
+          <button onclick="document.getElementById('category-modal').classList.add('hidden')" class="p-1.5 hover:bg-charcoal-100 rounded-full transition-colors">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <form id="category-form" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1.5">Category Name</label>
+            <input type="text" id="category-name" class="form-input" placeholder="e.g. Modern Art" required />
+          </div>
+          <div class="flex gap-3 pt-4">
+            <button type="submit" class="btn-primary flex-1">Add Category</button>
+            <button type="button" onclick="document.getElementById('category-modal').classList.add('hidden')" class="px-4 py-2 border border-charcoal-200 rounded-lg font-medium text-sm hover:bg-charcoal-50 transition-colors flex-1">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/admin/js/admin.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

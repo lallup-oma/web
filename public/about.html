@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About – ArteVista</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { serif: ['Playfair Display', 'Georgia', 'serif'], sans: ['Inter', 'sans-serif'] },
+          colors: {
+            gold: { 50:'#fdfbf5', 100:'#faf4e1', 200:'#f3e3b0', 300:'#eacf7c', 400:'#dfb84a', 500:'#c9982a', 600:'#a87720' },
+            cream: { 50:'#fefdf9', 100:'#fdf9ef' },
+            charcoal: { 50:'#f7f7f7', 100:'#e8e8e8', 200:'#d1d1d1', 300:'#a8a8a8', 400:'#7a7a7a', 500:'#555555', 600:'#3d3d3d', 700:'#2a2a2a', 800:'#1c1c1c', 900:'#111111' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #fefdf9; }
+    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+  </style>
+</head>
+<body class="text-charcoal-800">
+
+  <header class="sticky top-0 z-50 bg-charcoal-900/95 backdrop-blur-sm shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <a href="/" class="flex items-center gap-2 group">
+        <div class="w-7 h-7 rounded-full bg-gold-500 flex items-center justify-center">
+          <span class="text-white text-xs font-bold font-serif">A</span>
+        </div>
+        <span class="font-serif text-lg font-semibold text-white group-hover:text-gold-300 transition-colors">ArteVista</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-7">
+        <a href="/" class="text-charcoal-300 hover:text-white text-sm font-medium transition-colors">Home</a>
+        <a href="/gallery.html" class="text-charcoal-300 hover:text-white text-sm font-medium transition-colors">Gallery</a>
+        <a href="/about.html" class="text-white text-sm font-medium">About</a>
+        <a href="/contact.html" class="text-charcoal-300 hover:text-white text-sm font-medium transition-colors">Contact</a>
+      </nav>
+      <a href="/gallery.html" class="hidden md:inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-5 py-2 rounded-full text-sm font-medium transition-colors">
+        <i data-lucide="layout-grid" class="w-4 h-4"></i> Gallery
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative bg-charcoal-900 py-20 overflow-hidden">
+    <div class="absolute inset-0 opacity-25">
+      <img src="https://images.pexels.com/photos/1572386/pexels-photo-1572386.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="" class="w-full h-full object-cover" />
+    </div>
+    <div class="relative max-w-3xl mx-auto px-4 text-center">
+      <p class="text-gold-400 text-sm font-medium tracking-widest uppercase mb-3">Our Story</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-bold text-white mb-4">About ArteVista</h1>
+      <p class="text-charcoal-300 text-lg leading-relaxed">A passionate gallery dedicated to bringing original, handcrafted art into your world.</p>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="py-20 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-14 items-center">
+      <div>
+        <p class="text-gold-600 text-sm font-medium tracking-widest uppercase mb-3">Who We Are</p>
+        <h2 class="font-serif text-4xl font-bold text-charcoal-900 mb-6">Art That Speaks to You</h2>
+        <p class="text-charcoal-500 leading-relaxed mb-4">ArteVista was born out of a love for original art and a desire to make it accessible to everyone. We curate paintings from talented artists, giving each work the stage it deserves.</p>
+        <p class="text-charcoal-500 leading-relaxed mb-6">Every painting in our collection is an original piece — not a print, not a reproduction. When you buy from ArteVista, you own something truly unique.</p>
+        <div class="flex flex-wrap gap-4">
+          <div class="flex items-center gap-2 text-sm text-charcoal-600">
+            <i data-lucide="check-circle" class="w-5 h-5 text-gold-500"></i> 100% Original Works
+          </div>
+          <div class="flex items-center gap-2 text-sm text-charcoal-600">
+            <i data-lucide="check-circle" class="w-5 h-5 text-gold-500"></i> Certificate of Authenticity
+          </div>
+          <div class="flex items-center gap-2 text-sm text-charcoal-600">
+            <i data-lucide="check-circle" class="w-5 h-5 text-gold-500"></i> Careful Packaging & Delivery
+          </div>
+        </div>
+      </div>
+      <div class="relative">
+        <img src="https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Artist at work" class="rounded-2xl w-full object-cover h-80 shadow-xl" />
+        <div class="absolute -bottom-5 -left-5 bg-gold-500 text-white p-5 rounded-xl shadow-lg">
+          <div class="font-serif text-3xl font-bold">5+</div>
+          <div class="text-xs font-medium mt-0.5 text-gold-100">Years of curation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-gold-600 text-sm font-medium tracking-widest uppercase mb-3">What We Stand For</p>
+        <h2 class="font-serif text-4xl font-bold text-charcoal-900">Our Values</h2>
+        <div class="w-16 h-0.5 bg-gold-500 mx-auto mt-4"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center p-8 rounded-2xl bg-cream-50 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 rounded-2xl bg-gold-100 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="palette" class="w-7 h-7 text-gold-600"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-charcoal-900 mb-3">Authenticity</h3>
+          <p class="text-charcoal-500 text-sm leading-relaxed">Every piece is an original, hand-created work. We never sell reproductions or prints.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-cream-50 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 rounded-2xl bg-gold-100 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="heart" class="w-7 h-7 text-gold-600"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-charcoal-900 mb-3">Passion</h3>
+          <p class="text-charcoal-500 text-sm leading-relaxed">Art isn't just business for us — it's a calling. We carefully select every painting we showcase.</p>
+        </div>
+        <div class="text-center p-8 rounded-2xl bg-cream-50 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 rounded-2xl bg-gold-100 flex items-center justify-center mx-auto mb-5">
+            <i data-lucide="shield-check" class="w-7 h-7 text-gold-600"></i>
+          </div>
+          <h3 class="font-serif text-xl font-bold text-charcoal-900 mb-3">Trust</h3>
+          <p class="text-charcoal-500 text-sm leading-relaxed">Our WhatsApp-based checkout ensures you deal with a real person, not a faceless system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-charcoal-900 py-16 text-center">
+    <div class="max-w-2xl mx-auto px-4">
+      <h2 class="font-serif text-3xl font-bold text-white mb-4">Ready to Find Your Painting?</h2>
+      <p class="text-charcoal-300 mb-8">Browse our collection and take home a piece of original art today.</p>
+      <a href="/gallery.html" class="inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-8 py-3.5 rounded-full font-medium transition-colors">
+        Explore Gallery <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-charcoal-900 border-t border-charcoal-800 py-8">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-charcoal-500 text-xs">&copy; 2024 ArteVista. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
